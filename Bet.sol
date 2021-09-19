@@ -5,21 +5,24 @@ contract Bet{
     string public description;
     uint public contribution;
     address public better;
-    uint public dummyBalance;
+    uint public contractBalance;
+
 
 
 
 
     function Bet(string desc,uint valueStaked) public payable{
         require(msg.value==valueStaked);
-        // msg.value==valueStaked;
         manager=msg.sender;
         description=desc;
         contribution=valueStaked;
+        contractBalance=address(this).balance;
 
 
 
     }
+
+
 
     modifier restricted(){
         require(msg.sender==manager);
@@ -30,15 +33,19 @@ contract Bet{
 
 
     function contribute() public payable{
+
         require(msg.value==contribution);
+        require(msg.value==contractBalance);
+        require(msg.sender!=manager);
         require(better==address(0));
         better=msg.sender;
+        contractBalance=address(this).balance;
 
     }
 
-    function isManageRight(bool managerCorrect) public payable restricted {
+    function isManageRight(bool managerCorrect) public restricted {
 
-        if(manager==better || better==address(0)){
+        if(better==address(0)){
             manager.transfer(this.balance);
         }
 
@@ -48,6 +55,7 @@ contract Bet{
         } else if (managerCorrect==false) {
             better.transfer(this.balance);
         }
+        contractBalance=address(this).balance;
 
     }
 
