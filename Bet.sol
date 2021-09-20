@@ -1,5 +1,24 @@
 pragma solidity ^0.4.17;
 
+
+//Link that I belive helped me pass value from the factory Bet to the child Bet contract https://ethereum.stackexchange.com/questions/62031/create-a-child-contract-from-a-parent-contract-and-forward-the-sender-amount-to?rq=1
+contract BetFactory{
+    address[] public deployedBets;
+
+    function createBet(string desc, uint valueStaked) public payable{
+
+        address newBet=(new Bet).value(msg.value)(desc, valueStaked,msg.sender);
+        deployedBets.push(newBet);
+    }
+
+    function getDeployedBets() public view returns (address[]){
+        return deployedBets;
+    }
+}
+
+
+
+
 contract Bet{
     address public manager;
     string public description;
@@ -11,9 +30,9 @@ contract Bet{
 
 
 
-    function Bet(string desc,uint valueStaked) public payable{
+    function Bet(string desc,uint valueStaked, address creator) public payable{
         require(msg.value==valueStaked);
-        manager=msg.sender;
+        manager=creator;
         description=desc;
         contribution=valueStaked;
         contractBalance=address(this).balance;
