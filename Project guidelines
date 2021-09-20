@@ -17,6 +17,15 @@ Inside of the ethereum folder , I create a compile.js file, a deploy. js file
 and an extra folder: contracts
 Inside of the contracts folder, I move the Bet.sol file
 
+6.Compiling.
+Inside of our ethereum folder , we are creating a build folder.
+Our compile.js file will be ran only once.
+It will:
+- delete everything in the build folder
+- read Bet.sol from the contracts folder
+- Compile both Factory and Bet contracts with solc@04.17
+- Write output to the build folder
+
 To do:
 bla
 
