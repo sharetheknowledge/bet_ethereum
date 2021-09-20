@@ -15,9 +15,10 @@ Updated command (the one I ran):
 Inside of our bet directory, I create an ethereum folder.
 Inside of the ethereum folder , I create a compile.js file, a deploy. js file
 and an extra folder: contracts
-Inside of the contracts folder, I move the Bet.sol file  
+Inside of the contracts folder, I move the Bet.sol file
 
 To do:
+bla
 
 4. Create tests
 
