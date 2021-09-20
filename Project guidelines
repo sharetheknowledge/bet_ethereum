@@ -26,10 +26,13 @@ It will:
 - Compile both Factory and Bet contracts with solc@04.17
 - Write output to the build folder
 
-To do:
-bla
+6b. Now we wrote our compile.js file,we can:
+- cd etheureum
+- node compile.js
+To test our compiler
 
-4. Create tests
+
+7. Test file setup
 
 
 
