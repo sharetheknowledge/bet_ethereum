@@ -5,10 +5,17 @@
 of the primary contract from the user perspective
 
 4.Project setup:
+Inside of our bet directory
 -npm init
 -npm install --save ganache-cli mocha solc fs-extra web3@1.0.0-beta.26
-Updated command:
--npm install --save ganache-cli mocha solc@0.4.17 fs-extra web3@1.3.5  
+Updated command (the one I ran):
+-npm install --save ganache-cli mocha solc@0.4.17 fs-extra web3@1.3.5
+
+5. Project folder restructuring:
+Inside of our bet directory, I create an ethereum folder.
+Inside of the ethereum folder , I create a compile.js file, a deploy. js file
+and an extra folder: contracts
+Inside of the contracts folder, I move the Bet.sol file  
 
 To do:
 
