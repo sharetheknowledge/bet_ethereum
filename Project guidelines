@@ -1,0 +1,31 @@
+1. Design Primary contract:
+- Objective, variables and functions purpose
+2. Write the contract in Solidity
+3. Create the Factory contract that allow us to create multiple instances
+of the primary contract from the user perspective
+
+4.Project setup:
+-npm init
+-npm install --save ganache-cli mocha solc fs-extra web3@1.0.0-beta.26
+Updated command:
+-npm install --save ganache-cli mocha solc@0.4.17 fs-extra web3@1.3.5  
+
+To do:
+
+4. Create tests
+
+
+
+
+
+-----
+Challenges:
+- Add the requirements to every possible value transfer
+
+- Everytime the contract balance is being altered
+And keep track of the balance thanks to a contractBalance variable being
+updated everytime there is a possible change on the contract balance.
+
+- In case of primary contract constructor being payable,
+how to pass value from the Factory contract to the child/primary contract,
+see line address newBet=(new Bet).value(msg.value)(desc, valueStaked,msg.sender);
