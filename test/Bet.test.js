@@ -21,7 +21,7 @@ beforeEach(async () => {
     .deploy({ data: compiledBetFactory.bytecode })
     .send({ from: accounts[0], gas: "1000000" });
 
-  bet = await factory.methods
+  await factory.methods
     .createBet("random statement", "1000000")
     .send({ from: accounts[0], gas: "1000000", value: 1000000 });
 
@@ -43,4 +43,26 @@ describe("Bets", () => {
     assert.ok(factory.options.address);
     assert.ok(bet.options.address);
   });
+
+  it("marks caller as the manager", async () => {
+    manager = await bet.methods.manager().call();
+    // console.log(manager);
+    // console.log(accounts[0]);
+    assert.equal(accounts[0], manager);
+  });
+
+  it("allows a new comer to meet the bet given the right amount", async () => {
+    await bet.methods.contribute().send({
+      from: accounts[1],
+      gas: "1000000",
+      value: 1000000,
+    });
+
+    better = await bet.methods.better().call();
+    assert.equal(accounts[1], better);
+    // console.log(better);
+    // console.log(accounts[1]);
+  });
+
+  // it("doesnt allow a second comer to meet the bet", async)
 });

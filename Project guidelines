@@ -34,8 +34,24 @@ To test our compiler
 
 7. Test file setup
 
+-New folder creation
+-Setup the test file:
+  -import 'require' assert module, gananche-cli module (local test network),
+   web3 library
+  and we create a new instance of web3 to which we plug the ganache provider.
+  We also get the compiled contracts from the build directory.
+  Then, we pass those compiled contracts -JSON parsed- to the 'new web3.eth.Contract()'
+  And we access the functions within that contract via the .methods property
+  We access the address via the options.address property
+- We then write the tests with a beforeEach at the beginning that creates
+for us the contracts instances to test,
+- then in package.json we edit the 'test' line with 'test':'mocha'
+-then we can go to the cd bet directory and run 'npm run test' to see if first tests
+works fine
+- Then we can actually keep on going with the tests
 
 
+7b. Implement all deemed necessary tests
 
 
 -----
@@ -49,3 +65,24 @@ updated everytime there is a possible change on the contract balance.
 - In case of primary contract constructor being payable,
 how to pass value from the Factory contract to the child/primary contract,
 see line address newBet=(new Bet).value(msg.value)(desc, valueStaked,msg.sender);
+
+
+- To set up the bet instance , we had to provide money, so we discovered a newBet
+parameter in the .send() from web3 - which is 'value'
+ex: .send({ from: accounts[0], gas: "1000000", value: 1000000 });
+
+
+- First test: I wanted to make sure the manager was acutally accounts[0].
+So I just tried assert.equal(accounts[0], bet.methods.manager);
+
+but the manager variable wasn't that easy to retrieve. Instead, I had to do
+an async/await function before, like so:
+
+it('sets the caller as the manager',async()=>{
+manager=await bet.methods.manager().call()
+
+assert.equal(accounts[0],manager);
+})
+
+What we learn: variables have to be called with () as well and inside of an
+async await
