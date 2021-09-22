@@ -22,8 +22,8 @@ beforeEach(async () => {
     .send({ from: accounts[0], gas: "1000000" });
 
   await factory.methods
-    .createBet("random statement", "1000000")
-    .send({ from: accounts[0], gas: "1000000", value: 1000000 });
+    .createBet("random statement", "1000000000000000000")
+    .send({ from: accounts[0], gas: "1000000", value: 1000000000000000000 });
 
   [betAddress] = await factory.methods.getDeployedBets().call();
 
@@ -55,14 +55,138 @@ describe("Bets", () => {
     await bet.methods.contribute().send({
       from: accounts[1],
       gas: "1000000",
-      value: 1000000,
+      value: 1000000000000000000,
     });
 
     better = await bet.methods.better().call();
     assert.equal(accounts[1], better);
+    // console.log(bet.options.address);
     // console.log(better);
     // console.log(accounts[1]);
   });
 
-  // it("doesnt allow a second comer to meet the bet", async)
+  it("doesnt allow a second comer to meet the bet", async () => {
+    await bet.methods.contribute().send({
+      from: accounts[1],
+      gas: "1000000",
+      value: 1000000000000000000,
+    });
+
+    better = await bet.methods.better().call();
+    try {
+      await bet.methods.contribute().send({
+        from: accounts[2],
+        gas: "1000000",
+        value: 1000000000000000000,
+      });
+
+      assert(false);
+    } catch (e) {
+      assert(e);
+      // console.log(better);
+      // console.log(accounts[2]);
+    }
+  });
+
+  it("doesnt allow better to contribute if better value is higher than expected", async () => {
+    try {
+      await bet.methods.contribute.send({
+        from: accounts[1],
+        gas: "1000000",
+        value: 2000000000000000000,
+      });
+      assert(false);
+    } catch (e) {
+      assert(e);
+    }
+  });
+
+  it("doesnt allow better to contribute if better value is lower than expected", async () => {
+    try {
+      await bet.methods.contribute.send({
+        from: accounts[1],
+        gas: "1000000",
+        value: 5,
+      });
+      assert(false);
+    } catch (e) {
+      assert(e);
+    }
+  });
+
+  it("allows manager to withdraw funds if no one contributed", async () => {
+    contractBalance = await bet.methods.contractBalance().call();
+
+    priorManagerBalance = await web3.eth.getBalance(accounts[0]);
+
+    better = await bet.methods.better().call();
+
+    //meaning of the following line ?
+    const emptyAddress = /^0x0+$/.test(better);
+
+    await bet.methods
+      .isManageRight(true)
+      .send({ from: accounts[0], gas: "1000000" });
+
+    posteriorManagerBalance = await web3.eth.getBalance(accounts[0]);
+
+    assert(posteriorManagerBalance, priorManagerBalance + contractBalance);
+    assert(better, emptyAddress);
+
+    console.log(contractBalance);
+    console.log(priorManagerBalance);
+    console.log(posteriorManagerBalance);
+    console.log(better);
+  });
+
+  it("allows manager to withdraw funds if no one contributed even though he is false", async () => {
+    contractBalance = await bet.methods.contractBalance().call();
+
+    priorManagerBalance = await web3.eth.getBalance(accounts[0]);
+
+    better = await bet.methods.better().call();
+
+    //meaning of the following line ?
+    const emptyAddress = /^0x0+$/.test(better);
+
+    await bet.methods
+      .isManageRight(false)
+      .send({ from: accounts[0], gas: "1000000" });
+
+    posteriorManagerBalance = await web3.eth.getBalance(accounts[0]);
+
+    assert(posteriorManagerBalance, priorManagerBalance + contractBalance);
+    assert(better, emptyAddress);
+
+    console.log(contractBalance);
+    console.log(priorManagerBalance);
+    console.log(posteriorManagerBalance);
+    console.log(better);
+  });
+
+  it("doesnt allow better to contribute if manager withdrawed funds", async () => {
+    await bet.methods
+      .isManageRight(true)
+      .send({ from: accounts[0], gas: "1000000" });
+
+    try {
+      await bet.methods.contribute().send({
+        from: accounts[1],
+        gas: "1000000",
+        value: 1000000000000000000,
+      });
+      assert(false);
+    } catch (e) {
+      assert(e);
+
+      better = await bet.methods.better().call();
+      console.log(better);
+    }
+  });
+
+  // it("doesnt allow the manager to be the better")
+
+  // it("doesnt allow the better to decide whether manager is right")
+
+  // it('allows anyone to see the contract balance at anytime')
 });
