@@ -54,6 +54,26 @@ works fine
 7b. Implement all deemed necessary tests - questions arised on gasUsed - see Challenges
 
 8. Deployment
+- bet directory: we npm install --save truffle-hdwallet-provider@0.0.3
+- In our deployment script, we'll require: const HDWalletProvider = require("truffle-hdwallet-provider");
+- We setup the new provider:' const provider = new HDWalletProvider(
+  "satoshi frozen ....'
+- And we create a new function const deploy = async () => { in which Ill save the
+variable 'accounts','result' with the result of the contract deployed
+and we make sure to console.log the address of the contract deployed:
+console.log("Contract deployed to", result.options.address);
+-Then we cd etheureum and run 'node deploy.js'
+
+****address of my deployed contract to the Rinkeby network : 0x2bcA21280148Dbe49860194e76780B0fb148AA8A*****
+
+* To do*
+- see the deploy process again in lottery contract
+- see difference bytecode / ABI (interface): as I see it now, the ABI allows us
+to deal with the class of the contract , i.e. with the properties of it but it does
+not have the actual values from a spefic contract, i.e the instance of the contract.
+To verify
+
+Then: web application to build around it.
 
 
 -----
