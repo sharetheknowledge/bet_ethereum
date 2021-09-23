@@ -51,7 +51,9 @@ works fine
 - Then we can actually keep on going with the tests
 
 
-7b. Implement all deemed necessary tests
+7b. Implement all deemed necessary tests - questions arised on gasUsed - see Challenges
+
+8. Deployment
 
 
 -----
@@ -101,3 +103,26 @@ We explicitly assert(false) after the try catch in case, that line of code is ra
  beforeEach block.
 
 - To check an accounts balance: await web3.eth.getBalance(accounts[0])
+
+-assert(false) doesnt seem to fail my test
+
+- The real assert to check equality for numbers, should have been
+
+assert(posteriorManagerBalance === priorManagerBalance + contractBalance);
+
+But this will always fail due to the gas spent
+
+On gasUsed by a transaction, we can get access to this variable via
+getTransactionReceipt from a transaction and view the transactionHash property/key
+of that object
+
+example:
+
+txn = await bet.methods
+  .isManageRight(false)
+  .send({ from: accounts[0], gas: "1000000" });
+
+receipt = await web3.eth.getTransactionReceipt(txn.transactionHash);
+console.log(receipt.gasUsed);
+
+********To do: work out the exact balances taking into account gasUsed*******

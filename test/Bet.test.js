@@ -149,10 +149,12 @@ describe("Bets", () => {
     //meaning of the following line ?
     const emptyAddress = /^0x0+$/.test(better);
 
-    await bet.methods
+    txn = await bet.methods
       .isManageRight(false)
       .send({ from: accounts[0], gas: "1000000" });
 
+    receipt = await web3.eth.getTransactionReceipt(txn.transactionHash);
+    console.log(receipt);
     posteriorManagerBalance = await web3.eth.getBalance(accounts[0]);
 
     assert(posteriorManagerBalance, priorManagerBalance + contractBalance);
@@ -184,9 +186,48 @@ describe("Bets", () => {
     }
   });
 
-  // it("doesnt allow the manager to be the better")
+  it("doesnt allow the manager to be the better", async () => {
+    try {
+      await bet.methods.contribute().send({
+        from: accounts[0],
+        gas: "1000000",
+        value: 1000000000000000000,
+      });
+      assert(false);
+    } catch (e) {
+      assert(e);
+    }
+  });
 
-  // it("doesnt allow the better to decide whether manager is right")
+  it("doesnt allow the better to decide whether manager is right", async () => {
+    await bet.methods.contribute().send({
+      from: accounts[1],
+      gas: "1000000",
+      value: 1000000000000000000,
+    });
 
-  // it('allows anyone to see the contract balance at anytime')
+    priorBalance = await bet.methods.contractBalance().call();
+
+    try {
+      await bet.methods
+        .isManageRight(true)
+        .send({ from: accounts[0], gas: "1000000" });
+      throw "error";
+    } catch (e) {
+      assert(e);
+      console.log(e);
+    }
+    posteriorBalance = await bet.methods.contractBalance().call();
+    console.log(priorBalance);
+    console.log(posteriorBalance);
+  });
+
+  it("allows anyone to see the contract balance at anytime", async () => {
+    try {
+      bal = await bet.methods.viewBalance().call();
+    } catch (e) {
+      assert(e);
+    }
+    console.log(bal);
+  });
 });
