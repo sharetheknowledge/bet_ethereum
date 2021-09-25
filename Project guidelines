@@ -66,14 +66,40 @@ console.log("Contract deployed to", result.options.address);
 
 ****address of my deployed contract to the Rinkeby network : 0x2bcA21280148Dbe49860194e76780B0fb148AA8A*****
 
-* To do*
-- see the deploy process again in lottery contract
-- see difference bytecode / ABI (interface): as I see it now, the ABI allows us
-to deal with the class of the contract , i.e. with the properties of it but it does
-not have the actual values from a spefic contract, i.e the instance of the contract.
-To verify
 
 Then: web application to build around it.
+
+9. Front end Setup
+
+9a.Web mockup + route structure:
+/: List of bets
+/bets/new: Form to make a new bet
+/bets/0x847: Bet details for bet at address ...
+
+- We'll use Next.js
+Inside our bet directory:
+  -cli:sudo npm install -g create-react-app
+  -npm install next react react-dom
+
+- Inside of our project directory 'bet', we create a new folder: 'pages'
+Every .js file we place within that folder will be turned into a
+visitable web page
+
+- As an example, we create two .js files within pages folder with:
+import React from 'react'
+export default ()=>{
+return <h1> This is a new page <h1>
+}
+
+In both files with a different h1, then inside of package.json,we add a new line
+in 'scripts':{
+"test":"mocha",
+"dev":"next dev"
+}
+
+- This will allow us to run the command: npm run dev. ( See challenges in case we got stuck)
+
+
 
 
 -----
@@ -146,3 +172,12 @@ receipt = await web3.eth.getTransactionReceipt(txn.transactionHash);
 console.log(receipt.gasUsed);
 
 ********To do: work out the exact balances taking into account gasUsed*******
+
+
+FRONT END
+
+
+- Challenge while trying running npm run dev :Error: ENOSPC: System limit for number of file watchers reached
+The error ENOSPC means that your hard drive is full.
+This command fixed it before running npm run dev:
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
