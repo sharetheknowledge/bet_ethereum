@@ -211,6 +211,46 @@ as componentDidMount does not execute on the server
     return <div>{this.props.bets}</div>;
   }
 
+  12a.Getting a Card-Group Styling from semantic-ui
+  npm install --save semantic-ui-react
+  npm install --save semantic-ui-css
+  documentation https://react.semantic-ui.com/
+
+  12b.We decide to show a Card from semantic-ui in our website.In our index.js file:
+  .import {Card} from "semantic-ui-react"
+  .Then we define another function inside our Component that
+  constructs the items to be passed to our Card.group object that gets itself returned.
+
+  renderBets() {
+    const items = this.props.bets.map((address) => {
+      return {
+        header: address,
+        description: <a>View Bet</a>,
+        fluid: true,
+      };
+    });
+
+    return <Card.Group items={items} />;
+  }
+
+  12c.We call that function created inside of our render() function,
+  valled with {this.renderBets()} and we also hardcode the css link provided by semantic-ui
+  in our rendered <div>:
+
+  render() {
+    return (
+      <div>
+        <link
+          async
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+        />
+        {this.renderBets()}
+      </div>
+    );
+  }
+
+
 
 -----
 Challenges:
