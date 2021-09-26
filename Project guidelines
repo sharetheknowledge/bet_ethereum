@@ -78,7 +78,7 @@ Then: web application to build around it.
 
 - We'll use Next.js
 Inside our bet directory:
-  -cli:sudo npm install -g create-react-app
+  -cli://sudo npm install -g create-react-app
   -npm install next react react-dom
 
 - Inside of our project directory 'bet', we create a new folder: 'pages'
@@ -99,7 +99,80 @@ in 'scripts':{
 
 - This will allow us to run the command: npm run dev. ( See challenges in case we got stuck)
 
+-Inside of our pages folder: we place index.js. This is set automatically as the root file
+by next.js
 
+********To do now**
+- configure web3 with a provider from metamask
+- tell web3 that a deployed copy of the BetFactory exists
+- use Factory instance to retrieve a list of deployed bets
+- Use React to show something about each bet
+***********************
+
+10. Showing up contract info in our webpage.
+
+10a. We first access via Remix, the betFactory at the address deployed And
+via metamask we create a first Bet so that we have something to show in Our
+webpage
+
+10b. We create two new files: web3.js and factory.js inside of our ethereum folder.
+
+-factory.js:
+  .We import web3 from the web3.js -provider setup file- that we just created
+  .We import BetFactory from the compiled json file
+  .We access the contract BetFactory at the address deployed and assign to a variable
+  .We export that variable
+
+-web3.js:
+As we are working with Next.js we have to understand how it works. With Next.js
+our code will first run in our server (node) and render a html document that it
+will send to our browser. Once the html initialized, it will start runnig the
+code in the browser which can then take over the code execution for rerendering.
+
+  This means we have to handle 2 configurations of our web3/provider instance:
+
+    -When running on the server: const provider = new HDWalletProvider("mneumonic",
+    "https:rinkeby...") and then web3=new Web3(provider)
+
+    -When running on the browser: web3=new Web3(window.ethereum)
+
+  To check whether we are running on the server or the browser, we can do a
+  condition if(typeof window !== "undefined" && typeof window.web3 !== "undefined")
+  To further check these values, we can try :typeof window in the chrome console
+  and then typeof window in our cli after typing 'node' and see what is returned.
+
+  .The imports required are 'Web3' and const HDWalletProvider = require("truffle-hdwallet-provider")
+  for configuration of the provider when not using metamask
+
+  .Then, we can export that variable
+
+10c. Modify index.js so that it shows our contract information
+
+  .We first import React
+  .We want to create a class based component so we also import {Component} from 'react'
+  .We also import our factory variable from the factory.js file newly created
+
+  .We create a BetIndex class: 'class BetIndex extends Component{
+  }'
+  .Then within that component , we place an async componentDidMount(){
+  const bets=await factory.methods.getDeployedBets().call();
+  console.log(bets);
+  }
+
+  This componentDidMount is async and it allow us to execute the React code Once
+  the component is already placed in the DOM
+
+  .The other thing we have to place within that BetIndex component is the render
+  method:render(){
+  return <div>Bets Index! </div>
+  }
+  Otherwise it will complain.
+
+  .Finally, we have to export default BetIndex. Next.js always expect us to
+  export something from our index.js file.
+
+Once all the bullet points in 10 are done, we can see the Bet address deployed
+via remix in our browser console
 
 
 -----
