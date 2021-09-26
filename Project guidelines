@@ -250,7 +250,23 @@ as componentDidMount does not execute on the server
     );
   }
 
+13.Adding a non-functional Button
+.In our index.js file, we can . import {Button} from 'semantic-ui-react'
 
+Then place the button in the returned div of our render() function
+
+render(){
+return(
+<div>
+........
+<Button content="Create Bet" icon="add circle" primary />
+</div>
+)
+}
+
+
+****To do: addding a Layout Component now,then define the routing , then 
+do a form creation for our Bet
 
 -----
 Challenges:
