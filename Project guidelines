@@ -265,8 +265,32 @@ return(
 }
 
 
-****To do: addding a Layout Component now,then define the routing , then 
+****To do: addding a Layout Component now,then define the routing , then
 do a form creation for our Bet
+
+14.Setting up a common component to all of our pages
+. As Next.js will attempt to create a page of all our .js files within pages folder,
+we'll create a new folder 'components', parallel (brother) of pages folder,where
+we place our Layout.js file. We can then write all of the .js that is common to
+our pages.
+Our Layout.js file will behave as the parent of the rest of the pages.
+So we write, after importing react:
+
+export default (props) => {
+  return (
+    <div>
+      <h1>Im a header</h1>
+      {props.children}
+      <h1>Im a footer</h1>
+    </div>
+
+And then, inside of our index.js file, we import Layout, and in the render menthod,
+we wrap the rendered <div> by <Layout> tags.
+
+Now, all of the what is inside of the <Layout> tag , will be seen as 'props.children'
+in our Layout component.
+
+
 
 -----
 Challenges:
@@ -347,3 +371,10 @@ FRONT END
 The error ENOSPC means that your hard drive is full.
 This command fixed it before running npm run dev:
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+
+
+-Github warning: : warning: File .next/cache/webpack/client-development/11.pack is
+66.02 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB.
+
+See what to do with these cases

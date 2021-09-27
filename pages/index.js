@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import factory from "../ethereum/factory.js";
 import { Card, Button } from "semantic-ui-react";
+import Layout from "../components/Layout";
 
 class BetIndex extends Component {
   static async getInitialProps() {
@@ -29,15 +30,18 @@ class BetIndex extends Component {
 
   render() {
     return (
-      <div>
-        <link
-          async
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-        />
-        {this.renderBets()}
-        <Button content="Create Bet" icon="add circle" primary />
-      </div>
+      <Layout>
+        <div>
+          <h3>Bets</h3>
+          <link
+            async
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+          />
+          {this.renderBets()}
+          <Button content="Create Bet" icon="add circle" primary />
+        </div>
+      </Layout>
     );
   }
 }
