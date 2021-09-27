@@ -290,6 +290,23 @@ we wrap the rendered <div> by <Layout> tags.
 Now, all of the what is inside of the <Layout> tag , will be seen as 'props.children'
 in our Layout component.
 
+14b. Setting up the header
+. We create a new file Header.js inside of our components folder
+. import {Menu} from semantic-ui-react
+. we export default ()=>{} and we place our Menu items from semantic ui
+.Back in Layout.js, we import Header from './Header'
+and we place a self closing tag <Header/> inside of our <div> just before {props.children}
+
+14c. Styling
+.We contrain the width: In our Layout.js file, import { Container } from "semantic-ui-react";
+and we replace the <div> tag with <Container> so now everything returned is wrapped in our
+Container
+
+.We place a top level margin in our header. Inside of Header.js,we replace
+the first <Menu> tag by <Menu style={{ marginTop: "10px" }}>
+First curly braces {} means , we are about to write some Javascript code
+Second curly braces {} inside is 'the actual object litteral'
+
 
 
 -----
