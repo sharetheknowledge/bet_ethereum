@@ -307,6 +307,48 @@ the first <Menu> tag by <Menu style={{ marginTop: "10px" }}>
 First curly braces {} means , we are about to write some Javascript code
 Second curly braces {} inside is 'the actual object litteral'
 
+.Last bit of Styling to make the button appear to the right, we add the property
+<Button floated="right" to our Button tag inside of index.jx.
+Then we move the button above our {this.renderBets()} line, so it actually appears
+to the right above the list of bets
+
+
+15. Routing.
+We want our users to be able to go to /bets/new when creating a bet.
+So inside of our pages folder, we create a new folder 'bets', then inside of that
+folder, a new file 'new.js'. This will set up the routing structure we are looking
+for.
+
+16./bets/new boiler plate setup
+
+Now we just create a starter for our new bet creation page
+import React,{Component}...
+
+class BetIndex extends Component{
+render(){
+return <h1>New Bet </h1>
+}
+}
+
+export default BetIndex
+
+17. Final css fix: we have to move our link tag containing all of our semantic-ui css
+styling from our index.js file back in our Layout component.Now that we have a common place to store all of
+the common stuff to all our pages, we can do that
+
+17b. Now we can manage to place that link that in the header by doing, inside of
+our Layout.js file:
+import Head from 'next/head';
+
+and then wrapping up our link tag within a <Head> tag:
+<Head>
+<link 'vlsdkk' />
+</Head>
+
+Now , if we inspect that <link> element in our console, we'll see it is wrapped
+in the header
+
+
 
 
 -----

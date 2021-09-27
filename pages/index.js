@@ -33,13 +33,14 @@ class BetIndex extends Component {
       <Layout>
         <div>
           <h3>Bets</h3>
-          <link
-            async
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+
+          <Button
+            floated="right"
+            content="Create Bet"
+            icon="add circle"
+            primary
           />
           {this.renderBets()}
-          <Button content="Create Bet" icon="add circle" primary />
         </div>
       </Layout>
     );
