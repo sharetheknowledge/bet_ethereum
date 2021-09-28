@@ -349,6 +349,28 @@ Now , if we inspect that <link> element in our console, we'll see it is wrapped
 in the header
 
 
+*****To do: bet form creation******
+
+18. Form creation and Input event handler
+
+.We set up the form thanks to semantic-ui with tags <Form>,<Form.Field>,
+ <Button> and <input/>
+.We change the classic <input/> tag with semantic-ui input <Input> which allow us
+to specify the input value is in wei
+
+18b Input event handler
+
+.At the top of our Component, we define
+state={contribution:""}
+
+.Then, inside of the <Input/> tag, we set the value of it to the state value contribution:
+value={this.state.contribution}
+
+.Then, inside of Input tag again, we do an event handler that sets the state
+of contribution to 'this.state.contribution'
+onChange={(event)=>this.setState({contribution:event.target.value})}
+
+
 
 
 -----
