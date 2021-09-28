@@ -13,10 +13,12 @@ class BetNew extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
-    const accounts = await web3.eth.getAccounts();
-    // await factory.methods
-    //   .createBet(this.state.description, this.state.contribution)
-    //   .send({ from: accounts[0] });
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    await factory.methods
+      .createBet(this.state.description, this.state.contribution)
+      .send({ from: accounts[0], value: this.state.contribution });
     console.log(accounts);
   };
 
