@@ -425,6 +425,16 @@ First '!' will turn it to its boolean form and second '!' will turn it back.
 Simply put: '!!' turns a string into its equivalent boolean form
 
 
+21.Loading spinner button:
+
+. We define a new state variable 'loading' initialized to false
+.At the beginning of our onSubmit function, we set the state of loading
+to true. And we also set the state of errorMessage to '' so that when user tries
+to redo a submital the previous error message goes away
+.Then at the end of our onSubmit function, we set the state of loading to false
+.Then inside of our <Button> tag we set the props loading:{this.state.loading}
+
+
 -----
 Challenges:
 - Add the requirements to every possible value transfer

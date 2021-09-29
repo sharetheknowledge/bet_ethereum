@@ -9,10 +9,13 @@ class BetNew extends Component {
     contribution: "",
     description: "",
     errorMessage: "",
+    loading: false,
   };
 
   onSubmit = async (event) => {
     event.preventDefault();
+
+    this.setState({ loading: true, errorMessage: "" });
     try {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -24,6 +27,7 @@ class BetNew extends Component {
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
+    this.setState({ loading: false });
   };
 
   render() {
@@ -48,7 +52,9 @@ class BetNew extends Component {
               }
             />
             <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button primary>Create !</Button>
+            <Button primary loading={this.state.loading}>
+              Create !
+            </Button>
           </Form.Field>
         </Form>
       </Layout>
