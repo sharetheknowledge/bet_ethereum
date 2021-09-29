@@ -371,6 +371,58 @@ of contribution to 'this.state.contribution'
 onChange={(event)=>this.setState({contribution:event.target.value})}
 
 
+19.Form event handler
+Just below our state definition we set a onSubmit function to be triggered
+by the form submittal. Adding event.preventDefault() so it doesn't get triggered
+automatically
+
+onSubmit= async (event) => {
+  event.preventDefault();
+
+19a.We import web3, and inside the onSubmit we request a list of our accounts
+
+const accounts = await window.ethereum.request({
+  method: "eth_requestAccounts",
+});
+
+19b.We can then call our createBet function based on our state values:
+
+await factory.methods
+  .createBet(this.state.description, this.state.contribution)
+  .send({ from: accounts[0], value: this.state.contribution })
+
+19c. Then, we wire the Form submittal to this function creted:
+
+<Form onSubmit={this.onSubmit}>
+
+20. Form error handling
+
+- We define a new state variable: errorMessage initialized to ''
+
+20b. We then place our code within onSubmit in a try catch statement
+
+20c. In the catch statement we catch(err){this.setState({errorMessage:err.message})}
+  We are basically adding the property 'message' of error caught to our
+  state variable errorMessage.
+
+20d. To make the error show up in the screen, we import {Message} (from semantic-ui)
+then inside of our form we add the tag:
+<Message error header="Oops!" content={this.state.errorMessage} />
+
+20e. To mae the error message show, we have to add the error property to the
+parent tag - according to semantic-ui.
+So we edit the form tag <Form.... error>
+But then, the error we defined will always show up on our page no matter what.
+So we apply the condition on our form tag:
+<Form.... error={this.state.errorMessage}>
+So when the page gets first loaded, error will be set to an empty string.
+Which according to javascript will evaluate to falsy.
+
+20f.Finally an error will be thrown as in the <Form...error={this.state.errorMessage}>
+tag, JS is expecting a boolean instead of a string. so what we do is put two !!.
+So it will be   ..error={!!this.state.errorMessage}>
+First '!' will turn it to its boolean form and second '!' will turn it back.
+Simply put: '!!' turns a string into its equivalent boolean form
 
 
 -----
@@ -459,3 +511,8 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 66.02 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB.
 
 See what to do with these cases
+
+- Understand the onSumit parameter inside of our <Form> tag.
+
+-Understand why we are putting event.preventDefault(); inside of our onSubmit()
+function - video 190
