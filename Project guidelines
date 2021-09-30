@@ -433,6 +433,29 @@ to true. And we also set the state of errorMessage to '' so that when user tries
 to redo a submital the previous error message goes away
 .Then at the end of our onSubmit function, we set the state of loading to false
 .Then inside of our <Button> tag we set the props loading:{this.state.loading}
+(see doc https://react.semantic-ui.com/elements/button/#states-loading)
+
+22.dynamic routing with variables within routing - bet address within the url
+.in bet directory: 'npm install --save next-routes'
+
+We create two new files: bet>server.js and bet>routes.js:
+
+.routes.js will help define our different routes.
+Will also export a set of navigation helpers
+
+.server.js will boot up Next and tell it to specifically use the routes in
+routes.js
+
+The code for both files can be found at the following link https://github.com/fridays/next-routes
+
+.When both files are setup, we then edit package.json to the line:
+
+"scripts": {
+  ....
+  "dev": "node server.js"
+
+And then we 'npm run dev' and make sure our app is still working 
+
 
 
 -----
