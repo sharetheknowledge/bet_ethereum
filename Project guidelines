@@ -454,7 +454,16 @@ The code for both files can be found at the following link https://github.com/fr
   ....
   "dev": "node server.js"
 
-And then we 'npm run dev' and make sure our app is still working 
+And then we 'npm run dev' and make sure our app is still working
+
+22b.Push to the index directory after creating a bet
+
+Now we can make use of the next-routes library:
+.import {  Router } from "../../routes";
+
+inside of our onSubmit after the betCreation statement, ...await window.ethereum...
+we place:
+Router.pushRoute('/');
 
 
 

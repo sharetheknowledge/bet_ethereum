@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import { Form, Button, Input, Message } from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
+import { Link, Router } from "../../routes";
 
 class BetNew extends Component {
   state = {
@@ -23,7 +24,8 @@ class BetNew extends Component {
       await factory.methods
         .createBet(this.state.description, this.state.contribution)
         .send({ from: accounts[0], value: this.state.contribution });
-      console.log(accounts);
+      // console.log(accounts);
+      Router.pushRoute("/");
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
